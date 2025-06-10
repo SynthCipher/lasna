@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { BiHardHat } from "react-icons/bi";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Applications from "./pages/Applications";
