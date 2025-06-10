@@ -1,10 +1,63 @@
 import React from "react";
-import { assets, manageJobsData } from "../assets/assets";
+import { assets } from "../assets/assets";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const ManageJob = () => {
   const navigate = useNavigate();
+  const { backendUrl, companyToken } = useContext(AppContext);
+
+  const [jobs, setJobs] = useState([]);
+
+  const fetchCompanyJob = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "/api/company/list-jobs", {
+        headers: { authorization: companyToken },
+      });
+      if (data.success) {
+        console.log(data);
+        setJobs(data.jobsData.reverse());
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // function to change the visibilty of the job
+  const changeJobVisibility = async (id) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/company/change-visibility",
+        { id },
+        { headers: { authorization: companyToken } }
+      );
+
+      if (data.success) {
+        console.log(data.job);
+        fetchCompanyJob();
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (companyToken) {
+      fetchCompanyJob();
+    }
+  }, [companyToken]);
+
   return (
     <div className="w-full">
       {/* Header */}
@@ -19,9 +72,7 @@ const ManageJob = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="text-blue-600 text-sm font-medium">Total Jobs</div>
-          <div className="text-2xl font-bold text-blue-700">
-            {manageJobsData.length}
-          </div>
+          <div className="text-2xl font-bold text-blue-700">{jobs.length}</div>
         </div>
 
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
@@ -29,7 +80,7 @@ const ManageJob = () => {
             Total Applicants
           </div>
           <div className="text-2xl font-bold text-orange-700">
-            {manageJobsData.reduce((sum, job) => sum + job.applicants, 0)}
+            {jobs.reduce((sum, job) => sum + job.applicants, 0)}
           </div>
         </div>
       </div>
@@ -39,7 +90,7 @@ const ManageJob = () => {
         {/* Mobile View */}
         <div className="block md:hidden">
           <div className="divide-y divide-gray-200">
-            {manageJobsData.map((job, index) => (
+            {jobs.map((job, index) => (
               <div key={index} className="p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -75,6 +126,7 @@ const ManageJob = () => {
                         type="checkbox"
                         defaultChecked={job.visible !== false}
                         className="sr-only peer"
+                        onChange={() => changeJobVisibility(job._id)}
                       />
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
@@ -112,7 +164,7 @@ const ManageJob = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {manageJobsData.map((job, index) => (
+              {jobs.map((job, index) => (
                 <tr
                   key={index}
                   className="hover:bg-gray-50 transition-colors duration-150"
@@ -158,6 +210,7 @@ const ManageJob = () => {
                         type="checkbox"
                         defaultChecked={job.visible !== false}
                         className="sr-only peer"
+                        onChange={() => changeJobVisibility(job._id)}
                       />
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
@@ -169,7 +222,7 @@ const ManageJob = () => {
         </div>
 
         {/* Empty State */}
-        {manageJobsData.length === 0 && (
+        {jobs.length === 0 && (
           <div
             className="text-center py-12"
             onClick={() => navigate("/dashboard/add-job")}
@@ -206,14 +259,14 @@ const ManageJob = () => {
         )}
       </div>
 
-      {manageJobsData.length !== 0 && (
+      {jobs.length !== 0 && (
         <div className="mt-4 flex justify-end">
           <button
-          className="px-4 py-2 flex it bg-black text-white rounded-md font-semibold cursor-pointer hover:bg-blue-700 transition"
-          onClick={() => navigate("/dashboard/add-job")}
-        >
-          Add New Job
-        </button>
+            className="px-4 py-2 flex it bg-black text-white rounded-md font-semibold cursor-pointer hover:bg-blue-700 transition"
+            onClick={() => navigate("/dashboard/add-job")}
+          >
+            Add New Job
+          </button>
         </div>
       )}
     </div>

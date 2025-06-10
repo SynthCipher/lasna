@@ -141,7 +141,7 @@ const ViewApplication = () => {
                       {application.jobTitle}
                     </td>
                     <td className="px-6 py-4  text-sm text-slate-600 max-lg:hidden flex items-center">
-                      <span className="mr-1">📍</span>
+                   
                       {application.location}
                     </td>
                     <td className="px-6 py-4">

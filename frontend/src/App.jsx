@@ -12,21 +12,27 @@ import ManageJob from "./pages/ManageJob";
 import ViewApplication from "./pages/ViewApplication";
 import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
+import { ToastContainer } from "react-toastify";
 const App = () => {
-  const { showRecruiterLogin } = useContext(AppContext);
+  const { showRecruiterLogin, companyToken } = useContext(AppContext);
   return (
     <div>
       {showRecruiterLogin && <RecruiterLogin />}
-
+      <ToastContainer position="top-center" autoClose={3000} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/apply-job/:id" element={<ApplyJob />} />
-        <Route path="/dashboard" element={<Dashboard />}>
-          <Route path="add-job" element={<AddJob />} />
-          <Route path="manage-job" element={<ManageJob />} />
-          <Route path="view-applications" element={<ViewApplication />} />
-        </Route>
+        {companyToken ? (
+          <>
+            {" "}
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route path="add-job" element={<AddJob />} />
+              <Route path="manage-job" element={<ManageJob />} />
+              <Route path="view-applications" element={<ViewApplication />} />
+            </Route>
+          </>
+        ) : null}
         <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
       </Routes>
     </div>

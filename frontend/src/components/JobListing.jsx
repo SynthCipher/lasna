@@ -30,6 +30,7 @@ const JobListing = () => {
         : [...prev, location]
     );
   };
+
   useEffect(() => {
     console.log("selectedCategories : ", selectedCategories);
     console.log("selectLocations : ", selectedLocations);

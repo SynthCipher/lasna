@@ -1,9 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RecruiterLogin = () => {
-  const { setShowRecruiterLogin } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData } =
+    useContext(AppContext);
+
   const [state, setState] = useState("Login");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -14,13 +21,53 @@ const RecruiterLogin = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (state === "Sign Up" && !isTextDataSubmitted) {
-      setIsTextDataSubmitted(true);
+      return setIsTextDataSubmitted(true);
+    }
+    if (state === "Login") {
+      const { data } = await axios.post(backendUrl + "/api/company/login", {
+        email,
+        password,
+      });
+
+      if (data.success) {
+        // toast.success(data.message)
+        setCompanyToken(data.token);
+        setCompanyData(data.company);
+        localStorage.setItem("companyToken", data.token);
+        setShowRecruiterLogin(false);
+        navigate("/dashboard");
+
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("image", image);
+      const { data } = await axios.post(
+        backendUrl + "/api/company/register",
+        formData
+      );
+
+      if (data.success) {
+        setCompanyToken(data.token);
+        setCompanyData(data.company);
+        localStorage.setItem("companyToken", data.token);
+        setShowRecruiterLogin(false);
+        navigate("/dashboard");
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
     }
   };
 
-  useEffect(() => {
-    console.log(name, email, password);
-  }, [name, email, password]);
+  // useEffect(() => {
+  //   console.log(name, email, password);
+  // }, [name, email, password]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
