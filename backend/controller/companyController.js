@@ -143,6 +143,15 @@ const postJob = async (req, res) => {
 // Get company job applicants
 const getCompanyJobApplicants = async (req, res) => {
   try {
+    const companyId = req.company._id;
+
+    // find job  applicaytion gor the user and populate related data
+    const applications = await JobApplication.find({ companyId })
+      .populate("userId", "name image resume")
+      .populate("jobId", "title location category level salary")
+      .exec();
+
+    return res.json({ success: true, applications });
   } catch (error) {
     res.json({
       success: false,
@@ -186,6 +195,12 @@ const getCompanyPostedJobs = async (req, res) => {
 // Change job application status
 const changeJobApplicationStatus = async (req, res) => {
   try {
+    const { id, status } = req.body;
+
+    // find job application and update status
+    await JobApplication.findByIdAndUpdate({ _id: id }, { status });
+
+    res.json({ success: true, message: "Status Changed" });
   } catch (error) {
     res.json({
       success: false,

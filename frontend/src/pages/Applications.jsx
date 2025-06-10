@@ -17,8 +17,13 @@ const Applications = () => {
   const { getToken } = useAuth();
 
   const navigate = useNavigate();
-  const { backendUrl, userData, userApplications, fectchUserData } =
-    useContext(AppContext);
+  const {
+    backendUrl,
+    userData,
+    userApplications,
+    fectchUserData,
+    fetchUserApplications,
+  } = useContext(AppContext);
 
   const updateResume = async () => {
     try {
@@ -43,22 +48,28 @@ const Applications = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(resume);
-  }, [resume]);
-
   const getStatusColor = (status) => {
     switch (status) {
       case "Accepted":
         return "bg-green-100 text-green-800 border-green-200";
       case "Rejected":
         return "bg-red-100 text-red-800 border-red-200";
+      case "pending":
       case "Pending":
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "Interview":
+        return "bg-purple-100 text-purple-800 border-purple-200";
       default:
         return "bg-blue-100 text-blue-800 border-blue-200";
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      console.log(userData);
+      fetchUserApplications();
+    }
+  }, [user]);
 
   return (
     <>
@@ -92,9 +103,10 @@ const Applications = () => {
             <div className="flex gap-2">
               <a
                 className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
-                href=""
+                href={userData?.resume}
+                target="_blank"
               >
-                Resume
+                {userData?.resume ? "View Resume" : "Upload Resume"}
               </a>
               <button
                 onClick={() => setIsEdit(true)}
@@ -106,7 +118,9 @@ const Applications = () => {
           )}
         </div>
 
-        <h2 className="text-xl font-semibold mb-4">Jobs Applied</h2>
+        {userApplications.length > 0 && (
+          <h2 className="text-xl font-semibold mb-4">Jobs Applied</h2>
+        )}
 
         {/* Desktop Table View */}
         <div className="hidden sm:block">
@@ -132,7 +146,7 @@ const Applications = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {jobsApplied.map((job, index) =>
+                {userApplications.map((job, index) =>
                   true ? (
                     <tr
                       key={index}
@@ -143,20 +157,20 @@ const Applications = () => {
                           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
                             <img
                               className="w-8 h-8 object-cover"
-                              src={job.logo}
-                              alt={job.company}
+                              src={job.companyId.image}
+                              alt="company logo"
                             />
                           </div>
                           <span className="font-medium text-gray-900">
-                            {job.company}
+                            {job.companyId.name}
                           </span>
                         </div>
                       </td>
                       <td className="py-4 px-6 text-gray-700 font-medium">
-                        {job.title}
+                        {job.jobId.title}
                       </td>
                       <td className="py-4 px-6 text-gray-600 max-md:hidden">
-                        {job.location}
+                        {job.jobId.location}
                       </td>
                       <td className="py-4 px-6 text-gray-600 max-md:hidden">
                         {moment(job.date).format("MMM DD, YYYY")}
@@ -180,7 +194,7 @@ const Applications = () => {
 
         {/* Mobile Card View */}
         <div className="sm:hidden space-y-4">
-          {jobsApplied.map((job, index) =>
+          {userApplications.map((job, index) =>
             true ? (
               <div
                 key={index}
@@ -192,13 +206,13 @@ const Applications = () => {
                     <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
                       <img
                         className="w-10 h-10 object-cover"
-                        src={job.logo}
-                        alt={job.company}
+                        src={job.companyId.image}
+                        alt="company logo"
                       />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 text-sm">
-                        {job.company}
+                        {job.companyId.name}
                       </h3>
                       <p className="text-gray-600 text-xs">
                         {moment(job.date).format("MMM DD, YYYY")}
@@ -221,14 +235,16 @@ const Applications = () => {
                       Position
                     </p>
                     <p className="text-sm font-medium text-gray-900">
-                      {job.title}
+                      {job.jobId.title}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
                       Location
                     </p>
-                    <p className="text-sm text-gray-700">{job.location}</p>
+                    <p className="text-sm text-gray-700">
+                      {job.jobId.location}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -237,7 +253,7 @@ const Applications = () => {
         </div>
 
         {/* Empty state */}
-        {jobsApplied.length === 0 && (
+        {userApplications.length === 0 && (
           <div
             onClick={() => {
               navigate("/");

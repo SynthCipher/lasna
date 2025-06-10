@@ -58,54 +58,66 @@ const applyForJob = async (req, res) => {
 const getUserJobApplications = async (req, res) => {
   try {
     const userId = req.auth.userId;
-
+    
     const applications = await JobApplication.find({ userId })
       .populate("companyId", "name email image")
       .populate("jobId", "title description location category level salary")
       .exec();
-
-    if (!applications || applications.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No job applications found for this user",
-      });
-    }
-
-    res.json({ success: true, applications });
+    
+    // ✅ Return 200 with empty array - this is normal, not an error
+    res.json({ 
+      success: true, 
+      applications: applications || [],
+      message: applications.length === 0 ? "No applications found" : undefined
+    });
+    
   } catch (error) {
-    res.json({
+    res.status(500).json({  // ✅ Use 500 for actual server errors
       success: false,
-      message: `Error in getUserJobApplications controller: ${error.message} `,
+      message: `Error in getUserJobApplications controller: ${error.message}`,
     });
   }
 };
 
-// update user profile (resume)
+//  update user profile (resume)
 const updateUserResume = async (req, res) => {
   try {
     const userId = req.auth.userId;
-    const resumeFile = req.resumeFile;
-    
+    const resumeFile = req.file; // Changed from req.resume to req.file
+
+    if (resumeFile) {
+      console.log("Resume file received:", resumeFile.filename);
+    } else {
+      console.log("No resume file received");
+      return res.json({
+        success: false,
+        message: "No resume file provided",
+      });
+    }
 
     const userData = await User.findById(userId);
 
+    if (!userData) {
+      return res.json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
     if (resumeFile) {
       const resumeUpload = await cloudinary.uploader.upload(resumeFile.path, {
-        folder: "LASNA RESUME",
-        use_filename: true, // Keeps original file name
-        unique_filename: true,
+        folder: "resumes", // Optional: organize uploads in folders
       });
       userData.resume = resumeUpload.secure_url;
-      // await User.findByIdAndUpdate(userId, {
-      //   resume: resumeUpload.secure_url,
-      // });
     }
+
     await userData.save();
     res.json({ success: true, message: "Resume Updated" });
   } catch (error) {
+    console.error("Error in updateUserResume:", error);
     res.json({
       success: false,
-      message: `Error in updateUserResume controller: ${error.message} `,
+      message: `Error in updateUserResume controller: ${error.message}`,
     });
   }
 };

@@ -25,7 +25,6 @@ const App = () => {
         <Route path="/apply-job/:id" element={<ApplyJob />} />
         {companyToken ? (
           <>
-            {" "}
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="add-job" element={<AddJob />} />
               <Route path="manage-job" element={<ManageJob />} />
