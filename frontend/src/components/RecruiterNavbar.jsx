@@ -52,7 +52,8 @@ const RecruiterNavbar = () => {
           <div className="flex items-center gap-4">
             <img
               className="h-10 w-auto max-sm:h-8 cursor-pointer"
-              src={assets.logo}
+                   src={assets.lasnalogo}
+              
               alt="Company Logo"
               onClick={() => navigate("/dashboard")}
             />

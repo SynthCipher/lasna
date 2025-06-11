@@ -20,10 +20,12 @@ const Navbar = () => {
       <div className="flex justify-between items-center mx-3 sm:mx-5 py-3">
         <img
           onClick={() => navigate("/")}
-          src={assets.logo}
+          src={assets.lasnalogo}
+          // src={assets.logo}
           alt=""
-          className="cursor-pointer hover:opacity-80 transition-opacity"
+          className="cursor-pointer h-10 p-0.5 sm:ml-8 ml-0 hover:opacity-80 transition-opacity"
         />
+        
 
         {/* Show different content based on login status */}
         {companyToken && companyData ? (
