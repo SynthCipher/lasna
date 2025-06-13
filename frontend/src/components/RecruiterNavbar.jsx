@@ -59,7 +59,7 @@ const RecruiterNavbar = () => {
             />
             <button
               onClick={() => navigate("/")}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors shadow"
+              className="hidden sm:flex items-center gap-1.5 cursor-pointer px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors shadow"
             >
               <svg
                 className="w-4 h-4"

@@ -146,7 +146,7 @@ const Applications = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {userApplications.map((job, index) =>
+                {userApplications.reverse().map((job, index) =>
                   true ? (
                     <tr
                       key={index}
@@ -154,9 +154,9 @@ const Applications = () => {
                     >
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                          <div className="w-10 h-10 rounded-lg  flex items-center justify-center overflow-hidden">
                             <img
-                              className="w-8 h-8 object-cover"
+                              className="w-10 h-10 rounded-full border-gray-100 border-2 object-cover"
                               src={job.companyId.image}
                               alt="company logo"
                             />
@@ -203,9 +203,9 @@ const Applications = () => {
                 {/* Header with company and status */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center overflow-hidden">
+                    <div className="w-12 h-12 rounded-lg  flex items-center justify-center overflow-hidden">
                       <img
-                        className="w-10 h-10 object-cover"
+                        className="w-12 h-12 rounded-full border-gray-100 border-2 object-cover"
                         src={job.companyId.image}
                         alt="company logo"
                       />

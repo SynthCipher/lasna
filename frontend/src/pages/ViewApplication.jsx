@@ -184,7 +184,7 @@ const ViewApplication = () => {
 
                   <div className="border-t border-slate-100 pt-4">
                     <a
-                      href={applicant.userId.resume}
+                      href={applicant?.userId?.resume}
                       target="_blank"
                       className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-lg mb-3 transition-colors duration-200 flex items-center justify-center"
                     >
@@ -289,7 +289,7 @@ const ViewApplication = () => {
                         </td>
                         <td className="px-6 py-4">
                           <a
-                            href="https://vercel.com/jigmatdorjeys-projects"
+                            href={applicant?.userId?.resume}
                             target="_blank"
                             className="bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-sm transition-colors duration-200 flex items-center"
                           >

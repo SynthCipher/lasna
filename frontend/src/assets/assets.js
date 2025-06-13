@@ -35,9 +35,23 @@ import adobe_logo from "./adobe_logo.png";
 import amazon_logo from "./amazon_logo.png";
 import gov_logo from "./Emblem_of_India.svg.png";
 import lasnalogo from "./logo1.png";
+import acreoficelogo from "./comapnylogo/acreoficelogo.png";
+import dpklogo from "./comapnylogo/dpklogo.png";
+import lamdonlogo from "./comapnylogo/lamdonlogo.jpeg";
+import uollogo from "./comapnylogo/uollogo.png";
+import hiallogo from "./comapnylogo/hiallogo.png";
+import himathonlogo from "./comapnylogo/himmathonlogo.jpeg";
+import helpagelogo from "./comapnylogo/helpagelogo.webp";
 
 export const assets = {
   logo,
+  acreoficelogo,
+  dpklogo,
+  uollogo,
+  helpagelogo,
+  himathonlogo,
+  hiallogo,
+  lamdonlogo,
   search_icon,
   cross_icon,
   upload_area,
@@ -76,25 +90,27 @@ export const assets = {
   lasnalogo,
 };
 
-export const JobCategories = [
-  "Programming",
-  "Data Science",
-  "Designing",
-  "Networking",
-  "Management",
-  "Marketing",
-  "Cybersecurity",
-];
+// export const JobCategories = [
+//   "Programming",
+//   "Data Science",
+//   "Designing",
+//   "Networking",
+//   "Management",
+//   "Marketing",
+//   "Cybersecurity",
+// ];
 
-export const JobLocations = [
-  "Bangalore",
-  "Washington",
-  "Hyderabad",
-  "Mumbai",
-  "California",
-  "Chennai",
-  "New York",
-];
+// export const JobLocations = [
+//   "Bangalore",
+//   "Washington",
+//   "Hyderabad",
+//   "Mumbai",
+//   "California",
+//   "Chennai",
+//   "New York",
+// ];
+export const JobLocations = ["Leh", "Kargil"];
+export const JobCategories = ["Government", "Private", "NGO", "Other"];
 
 // Sample data for Manage Jobs Page
 export const manageJobsData = [

@@ -23,9 +23,8 @@ const Navbar = () => {
           src={assets.lasnalogo}
           // src={assets.logo}
           alt=""
-          className="cursor-pointer h-10 p-0.5 sm:ml-8 ml-0 hover:opacity-80 transition-opacity"
+          className="cursor-pointer h-10 p-0.5 sm:ml-8 max-sm:h-8 ml-0 hover:opacity-80 transition-opacity"
         />
-        
 
         {/* Show different content based on login status */}
         {companyToken && companyData ? (
@@ -54,19 +53,13 @@ const Navbar = () => {
           <div className="flex items-center gap-2 sm:gap-4">
             <Link
               to="/applications"
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 hover:underline underline-offset-4 text-sm"
+              className="text-gray-700 mr-2 hover:text-blue-600 font-medium transition-colors duration-200 text-sm"
             >
               <span className="hidden sm:inline">My Applications</span>
               <span className="sm:hidden">Applied</span>
             </Link>
-            <div className="w-px h-6 bg-gray-300"></div>
+
             <div className="flex items-center gap-2 sm:gap-3">
-              <span className="text-gray-700 font-medium text-sm hidden sm:block">
-                Hi, {user.fullName}
-              </span>
-              <span className="text-gray-700 font-medium text-xs sm:hidden">
-                {user.firstName}
-              </span>
               <UserButton
                 appearance={{
                   elements: {

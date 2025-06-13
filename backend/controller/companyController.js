@@ -111,34 +111,103 @@ const getCompanyData = async (req, res) => {
 };
 
 // Post a new job
+// Post a new job
 const postJob = async (req, res) => {
-  const { title, description, location, salary, level, category } = req.body;
+  const { 
+    title, 
+    description, 
+    district,
+    location, 
+    salary, 
+    category,
+    deadlineDate,
+    jobType,
+    experienceRequired,
+    skills,
+    contactEmail
+  } = req.body;
+  
   const companyId = req.company._id;
+  
   try {
+    // Validate required fields
+    if (!title || !description || !district || !location || !salary || !category || !deadlineDate || !experienceRequired || !contactEmail) {
+      return res.json({
+        success: false,
+        message: "All required fields must be provided"
+      });
+    }
+
+    // Validate deadline date is in the future
+    const deadline = new Date(deadlineDate);
+    if (deadline <= new Date()) {
+      return res.json({
+        success: false,
+        message: "Deadline date must be in the future"
+      });
+    }
+
     const newJob = new Job({
       title,
       description,
+      district,
       location,
       salary,
       companyId,
-      level,
       category,
-      date: Date.now(),
+      deadlineDate: deadline,
+      jobType: jobType || "full-time",
+      experienceRequired,
+      skills: skills || [],
+      contactEmail,
+      date: new Date(), // Current date when job is posted
+      visible: true,
+      isActive: true,
     });
 
     await newJob.save();
+    
     res.json({
       success: true,
       message: "Job posted successfully",
       job: newJob,
     });
   } catch (error) {
+    console.error("Error in postJob controller:", error);
     res.json({
       success: false,
-      message: `Error in getCompanyData  controller: ${error.message} `,
+      message: `Error in postJob controller: ${error.message}`,
     });
   }
 };
+// const postJob = async (req, res) => {
+//   const { title, description, location, salary, level, category } = req.body;
+//   const companyId = req.company._id;
+//   try {
+//     const newJob = new Job({
+//       title,
+//       description,
+//       location,
+//       salary,
+//       companyId,
+//       level,
+//       category,
+//       date: Date.now(),
+//     });
+
+//     await newJob.save();
+//     res.json({
+//       success: true,
+//       message: "Job posted successfully",
+//       job: newJob,
+//     });
+//   } catch (error) {
+//     res.json({
+//       success: false,
+//       message: `Error in getCompanyData  controller: ${error.message} `,
+//     });
+//   }
+// };
 
 // Get company job applicants
 const getCompanyJobApplicants = async (req, res) => {

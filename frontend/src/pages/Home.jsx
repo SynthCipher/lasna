@@ -1,4 +1,4 @@
-import AppDownload from "../components/AppDownload";
+import DualCTASection from "../components/DualCTASection";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import JobListing from "../components/JobListing";
@@ -10,7 +10,7 @@ const Home = () => {
       <Navbar />
       <Hero />
       <JobListing />
-      <AppDownload />
+      <DualCTASection />
       <Footer />
     </div>
   );

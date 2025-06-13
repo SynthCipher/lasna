@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
   return (
-    <div>
+    <div className="bg-gray-50">
       {showRecruiterLogin && <RecruiterLogin />}
       <ToastContainer position="top-center" autoClose={3000} />
       <Routes>

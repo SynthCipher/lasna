@@ -3,20 +3,22 @@ import { assets } from "../assets/assets";
 
 const ScrollingLogosSection = () => {
   const logoData = [
-    { src: assets.microsoft_logo, alt: "Microsoft" },
-    { src: assets.accenture_logo, alt: "Accenture" },
-    { src: assets.walmart_logo, alt: "Walmart" },
-    { src: assets.samsung_logo, alt: "Samsung" },
-    { src: assets.adobe_logo, alt: "Adobe" },
-    { src: assets.amazon_logo, alt: "Amazon" },
+    { src: assets.acreoficelogo, alt: "acreoficelogo" },
+    { src: assets.dpklogo, alt: "dpklogo" },
+    { src: assets.uollogo, alt: "uollogo" },
     { src: assets.gov_logo, alt: "gov" },
+    { src: assets.helpagelogo, alt: "helpagelogo" },
+    { src: assets.himathonlogo, alt: "himathonlogo" },
+    { src: assets.hiallogo, alt: "hiallogo" },
+    { src: assets.lamdonlogo, alt: "lamdonlogo" },
+    { src: assets.lasnalogo, alt: "lasnalogo" },
   ];
 
   const LogoCard = ({ src, alt }) => (
     <div className="flex-shrink-0 group">
-      <div className="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-indigo-200 transform hover:-translate-y-1">
+      <div className="bg-white rounded-lg p-2 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-indigo-200 transform hover:-translate-y-1">
         <img
-          className="h-4 w-auto opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+          className="h-6 w-auto   opacity-70 group-hover:opacity-100 transition-opacity duration-300"
           src={src}
           alt={alt}
         />
@@ -28,7 +30,7 @@ const ScrollingLogosSection = () => {
     <div className="relative overflow-hidden bg-gradient-to-r from-slate-50 via-white to-slate-50 mx-2 mt-5 p-6 rounded-xl shadow-lg border border-gray-200/50">
       {/* Header */}
       <div className="text-center mb-2">
-        <p className="text-lg font-semibold text-gray-700 mb-2">Trusted by </p>
+        <p className="text-lg font-semibold text-gray-700 mb-2">Recruited by</p>
         <div className="w-20 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
       </div>
 
