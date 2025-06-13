@@ -16,7 +16,7 @@ const Footer = () => {
         alt=""
       />
       <p className="flex-1 border-l border-gray-400 pl-4  text-sm text-gray-500 ">
-        <a className="text-gray-800" href="https://jigmatdorjey.vercel.app/">
+        <a className="text-gray-800" href="https://jigmatdorjey.vercel.ap">
           <span className="text-lg">@</span>SynthCipher
         </a>{" "}
       </p>

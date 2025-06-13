@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Applications from "./pages/Applications";
@@ -17,6 +17,8 @@ import { Analytics } from "@vercel/analytics/react";
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
   const location = useLocation();
+
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,10 +43,21 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* Fixed Disclaimer */}
-      <div className="fixed bottom-0 left-0 w-full bg-yellow-100 text-yellow-800 text-sm py-2 px-4 text-center shadow-md z-50">
-        <strong>Disclaimer:</strong> Lasna is not a recruiter. We only share job information for public awareness. Always verify with the official source before taking any action.
-      </div>
+      {/* Disclaimer with close button */}
+      {showDisclaimer && (
+        <div className="fixed bottom-0 left-0 w-full bg-yellow-100 text-yellow-800 text-sm py-2 px-4 text-center shadow-md z-50 flex justify-center items-center">
+          <span className="mr-4">
+            <strong>Disclaimer:</strong> Lasna is not a recruiter. We only share job information for public awareness. Always verify with the official source before taking any action.
+          </span>
+          <button
+            onClick={() => setShowDisclaimer(false)}
+            className="ml-auto text-yellow-900 hover:text-red-600 font-bold text-lg px-2"
+            title="Close"
+          >
+            ✖
+          </button>
+        </div>
+      )}
 
       <Analytics />
     </div>
