@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
+import { Analytics } from "@vercel/analytics/next"
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
     const location = useLocation(); // Get the current location
@@ -39,6 +40,7 @@ const App = () => {
         ) : null}
         <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
       </Routes>
+       <Analytics />
     </div>
   );
 };
