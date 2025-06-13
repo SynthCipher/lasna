@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
     const location = useLocation(); // Get the current location
