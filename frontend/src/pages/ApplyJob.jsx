@@ -10,7 +10,7 @@ import JobCard from "../components/JobCard";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useAuth, useClerk } from "@clerk/clerk-react";
+import { SignIn, useAuth, useClerk } from "@clerk/clerk-react";
 import { FaCopy, FaExternalLinkAlt, FaMailBulk } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa";
 import {
@@ -252,7 +252,10 @@ const ApplyJob = () => {
                   <button
                     onClick={applyHandler}
                     disabled={
-                      isAlreadyApplied || isDeadlinePassed || !jobData.isActive
+                      isAlreadyApplied ||
+                      isDeadlinePassed ||
+                      !jobData.isActive ||
+                      isSignedIn
                     }
                     className={`px-8 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
                       isAlreadyApplied
@@ -557,7 +560,10 @@ const ApplyJob = () => {
                   <button
                     onClick={applyHandler}
                     disabled={
-                      isAlreadyApplied || isDeadlinePassed || !jobData.isActive
+                      isAlreadyApplied ||
+                      isDeadlinePassed ||
+                      !jobData.isActive ||
+                      isSignedIn
                     }
                     className={`w-full sm:w-auto px-8 py-2 rounded-lg font-semibold transition-all duration-200 ${
                       isAlreadyApplied

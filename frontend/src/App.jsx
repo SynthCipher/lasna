@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Applications from "./pages/Applications";
@@ -12,35 +12,41 @@ import ViewApplication from "./pages/ViewApplication";
 import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
-import { useEffect } from "react";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
-    const location = useLocation(); // Get the current location
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top on route change
-  }, [location]); // Trigger on location change
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 min-h-screen relative">
       {showRecruiterLogin && <RecruiterLogin />}
       <ToastContainer position="top-center" autoClose={3000} />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/apply-job/:id" element={<ApplyJob />} />
-        {companyToken ? (
-          <>
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path="add-job" element={<AddJob />} />
-              <Route path="manage-job" element={<ManageJob />} />
-              <Route path="view-applications" element={<ViewApplication />} />
-            </Route>
-          </>
-        ) : null}
-        <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
+        {companyToken && (
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="add-job" element={<AddJob />} />
+            <Route path="manage-job" element={<ManageJob />} />
+            <Route path="view-applications" element={<ViewApplication />} />
+          </Route>
+        )}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-       <Analytics />
+
+      {/* Fixed Disclaimer */}
+      <div className="fixed bottom-0 left-0 w-full bg-yellow-100 text-yellow-800 text-sm py-2 px-4 text-center shadow-md z-50">
+        <strong>Disclaimer:</strong> Lasna is not a recruiter. We only share job information for public awareness. Always verify with the official source before taking any action.
+      </div>
+
+      <Analytics />
     </div>
   );
 };
