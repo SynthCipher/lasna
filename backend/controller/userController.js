@@ -5,6 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 // Get user data
 const getUserData = async (req, res) => {
+  console.log("------------------ :", req.auth.userId);
   try {
     const userId = req.auth.userId;
 
@@ -58,21 +59,21 @@ const applyForJob = async (req, res) => {
 const getUserJobApplications = async (req, res) => {
   try {
     const userId = req.auth.userId;
-    
+
     const applications = await JobApplication.find({ userId })
       .populate("companyId", "name email image")
       .populate("jobId", "title description location category level salary")
       .exec();
-    
+
     // ✅ Return 200 with empty array - this is normal, not an error
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       applications: applications || [],
-      message: applications.length === 0 ? "No applications found" : undefined
+      message: applications.length === 0 ? "No applications found" : undefined,
     });
-    
   } catch (error) {
-    res.status(500).json({  // ✅ Use 500 for actual server errors
+    res.status(500).json({
+      // ✅ Use 500 for actual server errors
       success: false,
       message: `Error in getUserJobApplications controller: ${error.message}`,
     });

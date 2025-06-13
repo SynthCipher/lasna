@@ -77,6 +77,9 @@ export const AppContextProvider = (props) => {
   const fetchUserApplications = async () => {
     try {
       const token = await getToken();
+      if (token) {
+        console.log(token);
+      }
       const { data } = await axios.get(backendUrl + "/api/users/applications", {
         headers: { authorization: `Bearer ${token}` },
       });
@@ -89,6 +92,11 @@ export const AppContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+  // useEffect(() => {
+  //   if (token) {
+  //     console.log(token);
+  //   }
+  // }, [token]);
 
   useEffect(() => {
     fetchJobs();

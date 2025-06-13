@@ -42,9 +42,12 @@ import uollogo from "./comapnylogo/uollogo.png";
 import hiallogo from "./comapnylogo/hiallogo.png";
 import himathonlogo from "./comapnylogo/himmathonlogo.jpeg";
 import helpagelogo from "./comapnylogo/helpagelogo.webp";
-
+import herologo from "./Frame 4.png";
+import usericon from "./user.svg"
 export const assets = {
+  usericon,
   logo,
+  herologo,
   acreoficelogo,
   dpklogo,
   uollogo,

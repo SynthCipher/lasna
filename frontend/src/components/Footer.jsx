@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className="container border-t border-gray-300  px-4 mb-2 2xl:px-20 mx-auto flex items-center justify-between gap-4 py-3 mt-20">
+    <div className="container border-t border-gray-300 mt-5  px-4 mb-2 2xl:px-20 mx-auto flex items-center justify-between gap-4 py-3 ">
       <img
         onClick={() => {
           navigate("/");

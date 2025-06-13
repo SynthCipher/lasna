@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Applications from "./pages/Applications";
 import ApplyJob from "./pages/ApplyJob";
@@ -12,8 +12,14 @@ import ViewApplication from "./pages/ViewApplication";
 import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
+import { useEffect } from "react";
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
+    const location = useLocation(); // Get the current location
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top on route change
+  }, [location]); // Trigger on location change
   return (
     <div className="bg-gray-50">
       {showRecruiterLogin && <RecruiterLogin />}

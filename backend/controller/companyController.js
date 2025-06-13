@@ -131,7 +131,7 @@ const postJob = async (req, res) => {
   
   try {
     // Validate required fields
-    if (!title || !description || !district || !location || !salary || !category || !deadlineDate || !experienceRequired || !contactEmail) {
+    if (!title || !description || !district || !location || !category || !deadlineDate || !experienceRequired) {
       return res.json({
         success: false,
         message: "All required fields must be provided"
@@ -152,12 +152,12 @@ const postJob = async (req, res) => {
       description,
       district,
       location,
-      salary,
+      salary :salary || null,
       companyId,
       category,
       deadlineDate: deadline,
       jobType: jobType || "full-time",
-      experienceRequired,
+      experienceRequired :  experienceRequired || null,
       skills: skills || [],
       contactEmail,
       date: new Date(), // Current date when job is posted

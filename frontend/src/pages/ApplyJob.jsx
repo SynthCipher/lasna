@@ -12,6 +12,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth, useClerk } from "@clerk/clerk-react";
 import { FaCopy, FaExternalLinkAlt, FaMailBulk } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 const ApplyJob = () => {
   const { id } = useParams();
@@ -63,9 +72,8 @@ const ApplyJob = () => {
       }
 
       if (!userData) {
-        return toast.error(
-          "Please complete your profile setup to apply for jobs."
-        );
+        toast.error("Please complete your profile setup to apply for jobs.");
+        navigate("/applications");
       }
 
       if (!userData.resume) {
@@ -145,6 +153,26 @@ const ApplyJob = () => {
 
   const handleEmailClick = () => {
     window.open(`mailto:${jobData.contactEmail}`, "_blank");
+  };
+
+  const handleShare = () => {
+    const shareData = {
+      title: jobData.title,
+      text: `Check out this job opening at ${jobData.companyId.name}!`,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      navigator
+        .share(shareData)
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing", error));
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      toast.info(
+        "Sharing not supported on this browser. Copy the link manually."
+      );
+    }
   };
 
   useEffect(() => {
@@ -244,6 +272,46 @@ const ApplyJob = () => {
                       ? "Sign in to Apply"
                       : "Apply Now"}
                   </button>
+                  {/* Social Share Buttons */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={handleShare}
+                        className="flex items-center gap-1 px-2 border-1 py-1 text-xs font-medium text-gray-300 hover:text-white transition-colors rounded-md hover:bg-gray-700/50"
+                        title="Share this job"
+                      >
+                        <FaShareAlt className="w-3 h-3" />
+                        Share
+                      </button>
+                      <FacebookShareButton url={window.location.href}>
+                        <FacebookIcon
+                          size={24}
+                          round
+                          className="hover:scale-110 transition-transform"
+                        />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={window.location.href}
+                        title={jobData.title}
+                      >
+                        <TwitterIcon
+                          size={24}
+                          round
+                          className="hover:scale-110 transition-transform"
+                        />
+                      </TwitterShareButton>
+                      <WhatsappShareButton
+                        url={window.location.href}
+                        title={jobData.title}
+                      >
+                        <WhatsappIcon
+                          size={24}
+                          round
+                          className="hover:scale-110 transition-transform"
+                        />
+                      </WhatsappShareButton>
+                    </div>
+                  </div>
                   <p className="text-gray-300 text-xs">
                     Posted {moment(jobData.createdAt || jobData.date).fromNow()}
                   </p>

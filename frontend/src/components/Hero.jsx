@@ -46,23 +46,13 @@ const Hero = () => {
         {/* Content */}
         <div className="relative  flex flex-col items-center justify-center min-h-[500px] px-6 text-center">
           {/* Minimalist Typography */}
-          <div className="mb-16 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight text-gray-900">
-              <div
-                style={{
-                  textAlign: "center",
-                  color: "#161616",
-                  fontFamily: "oblong",
-                  fontWeight: "400",
-                  letterSpacing: 4,
-                  wordWrap: "break-word",
-                }}
-              >
-                lasna
-              </div>
+            <img src={assets.herologo} alt="hero logo" class="md:h-32 sm:h-20 h-16" />
 
+          <div className="mb-16 text-center">
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight text-gray-900">
               <span className="block text-sm sm:text-base md:text-lg font-medium text-gray-500 tracking-wide  text-center uppercase">
-                by <span className="text-black font-semibold">Onela</span>
+                by <span className="text-black  font-semibold">Onela</span>
               </span>
             </h1>
 

@@ -46,14 +46,13 @@ const RecruiterNavbar = () => {
 
   return (
     <div className="bg-white shadow-sm border-b border-gray-200">
-      <div className="px-6 py-4">
+      <div className="px-6 py-2 max-sm:py-1.5">
         <div className="flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <img
               className="h-10 w-auto max-sm:h-8 cursor-pointer"
-                   src={assets.lasnalogo}
-              
+              src={assets.lasnalogo}
               alt="Company Logo"
               onClick={() => navigate("/dashboard")}
             />
