@@ -14,6 +14,8 @@ import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
 import CompanyProfile from "./pages/CompanyProfile";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy ";
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
@@ -36,6 +38,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/applications" element={<Applications />} />
         <Route path="/apply-job/:id" element={<ApplyJob />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         {companyToken && (
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="add-job" element={<AddJob />} />

@@ -76,7 +76,7 @@ const Applications = () => {
       <Navbar />
       <div className="container px-4 min-h-[65vh] 2xl:px-20 mx-auto my-10">
         <h2 className="text-xl font-medium">Your Resume</h2>
-        <div className="flex gap-2 mb-6 mt-3">
+        {/* <div className="flex gap-2 mb-6 mt-3">
           {isEdit || (userData && userData.resume === "") ? (
             <>
               <label className="flex items-center" htmlFor="resumeUpload">
@@ -114,6 +114,261 @@ const Applications = () => {
               >
                 Edit
               </button>
+            </div>
+          )}
+        </div> */}
+
+        <div className="mb-6 mt-3">
+          {isEdit || (userData && userData.resume === "") ? (
+            <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-6 transition-all hover:border-blue-400 hover:bg-blue-50/30">
+              {/* Upload Section */}
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex-1 w-full">
+                  <label
+                    className="group cursor-pointer flex items-center justify-center w-full"
+                    htmlFor="resumeUpload"
+                  >
+                    <div className="flex items-center space-x-3 bg-white border border-gray-200 rounded-lg px-4 py-3 hover:border-blue-400 hover:shadow-md transition-all group-hover:bg-blue-50/50 w-full sm:w-auto">
+                      {/* File Icon */}
+                      <div className="flex-shrink-0">
+                        <svg
+                          className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                      </div>
+
+                      {/* File Name/Status */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors truncate">
+                          {resume ? resume.name : "Choose Resume File"}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {resume
+                            ? `${(resume.size / 1024 / 1024).toFixed(2)} MB`
+                            : "PDF files only, max 10MB"}
+                        </p>
+                      </div>
+
+                      {/* Upload Icon */}
+                      <div className="flex-shrink-0">
+                        <svg
+                          className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+
+                    <input
+                      id="resumeUpload"
+                      onChange={(e) => setResume(e.target.files[0])}
+                      type="file"
+                      hidden
+                      accept="application/pdf"
+                    />
+                  </label>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={updateResume}
+                    disabled={!resume}
+                    className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-medium px-5 py-1 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md"
+                  >
+                    <span>Save</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setIsEdit(false);
+                      setResume(null);
+                    }}
+                    className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-5 py-1 rounded-lg transition-all duration-200 border border-gray-200 hover:border-gray-300"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+              {/* Progress or Status */}
+              {resume && (
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <svg
+                      className="w-4 h-4 text-green-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span className="text-sm text-green-700 font-medium">
+                      Ready to upload
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                {/* Resume Info */}
+                {/* <div className="flex items-center space-x-4   flex-1">
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-blue-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div className="flex-1 min-w-0  ">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Resume
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-0.5">
+                      {userData?.resume
+                        ? "Your current resume file"
+                        : "No resume uploaded yet"}
+                    </p>
+                  </div>
+                </div> */}
+                {/* Resume Info */}
+                <div className="w-full sm:flex-1">
+                  <div className="flex items-center justify-between sm:justify-start space-x-4">
+                    {/* Icon */}
+                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <svg
+                        className="w-6 h-6 text-blue-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </div>
+
+                    {/* Resume Text */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        Resume
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-0.5">
+                        {userData?.resume
+                          ? "Your current resume file"
+                          : "No resume uploaded yet"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-3 w-full sm:w-auto">
+                  {userData?.resume && (
+                    <a
+                      className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md text-center decoration-none"
+                      href={userData.resume}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                      <span>View Resume</span>
+                    </a>
+                  )}
+
+                  <button
+                    onClick={() => setIsEdit(true)}
+                    className="flex-1 sm:flex-none bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-6 py-1 text-sm rounded-lg transition-all duration-200 border border-gray-200 hover:border-gray-300 flex items-center justify-center space-x-2"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
+                    <span>{userData?.resume ? "Update" : "Upload"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Status Indicator */}
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center space-x-2">
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      userData?.resume ? "bg-green-400" : "bg-yellow-400"
+                    }`}
+                  ></div>
+                  <span
+                    className={`text-xs font-medium ${
+                      userData?.resume ? "text-green-600" : "text-yellow-600"
+                    }`}
+                  >
+                    {userData?.resume ? "Resume uploaded" : "Resume required"}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
         </div>
