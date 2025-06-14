@@ -254,8 +254,9 @@ const ApplyJob = () => {
                     disabled={
                       isAlreadyApplied ||
                       isDeadlinePassed ||
-                      !jobData.isActive ||
-                      isSignedIn
+                      !jobData.isActive
+                      //  ||
+                      // isSignedIn
                     }
                     className={`px-8 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
                       isAlreadyApplied
@@ -562,8 +563,9 @@ const ApplyJob = () => {
                     disabled={
                       isAlreadyApplied ||
                       isDeadlinePassed ||
-                      !jobData.isActive ||
-                      isSignedIn
+                      !jobData.isActive 
+                      // ||
+                      // isSignedIn
                     }
                     className={`w-full sm:w-auto px-8 py-2 rounded-lg font-semibold transition-all duration-200 ${
                       isAlreadyApplied

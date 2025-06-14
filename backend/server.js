@@ -44,6 +44,20 @@ app.use("/api/users", userRoutes);
 const PORT = process.env.PORT || 5000;
 Sentry.setupExpressErrorHandler(app);
 
+// In your main server file (app.js or server.js)
+import cron from "node-cron";
+import { cleanupExpiredJobs } from "./controller/jobController.js";
+
+// Run cleanup every day at 2 AM
+cron.schedule("0 2 * * *", async () => {
+  try {
+    console.log("Running daily job cleanup...");
+    await cleanupExpiredJobs();
+  } catch (err) {
+    console.error("Cron job failed:", err);
+  }
+});
+
 app.listen(PORT, (req, res) => {
   console.log("server is running on port : ", PORT);
 });

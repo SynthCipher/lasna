@@ -44,8 +44,10 @@ import himathonlogo from "./comapnylogo/himmathonlogo.jpeg";
 import helpagelogo from "./comapnylogo/helpagelogo.webp";
 import herologo from "./Frame 4.png";
 import usericon from "./user.svg"
+import drukautologo from "./comapnylogo/druklogo.png"
 export const assets = {
   usericon,
+  drukautologo,
   logo,
   herologo,
   acreoficelogo,

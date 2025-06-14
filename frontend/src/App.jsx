@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
+import CompanyProfile from "./pages/CompanyProfile";
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
@@ -23,6 +24,8 @@ const App = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+  // Disable console.log in this file
+  console.log = () => {};
 
   return (
     <div className="bg-gray-50 min-h-screen relative">
@@ -38,16 +41,22 @@ const App = () => {
             <Route path="add-job" element={<AddJob />} />
             <Route path="manage-job" element={<ManageJob />} />
             <Route path="view-applications" element={<ViewApplication />} />
+            <Route path="company-profile" element={<CompanyProfile />} />
           </Route>
         )}
+        {/* {companyToken && (
+          <Route path="/dashboard/company-profile" element={<CompanyProfile />} />
+        )} */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
       {/* Disclaimer with close button */}
-      {showDisclaimer && (
+      {!showRecruiterLogin && showDisclaimer && (
         <div className="fixed bottom-0 left-0 w-full bg-yellow-100 text-yellow-800 text-sm py-2 px-4 text-center shadow-md z-50 flex justify-center items-center">
           <span className="mr-4">
-            <strong>Disclaimer:</strong> Lasna is not a recruiter. We only share job information for public awareness. Always verify with the official source before taking any action.
+            <strong>Disclaimer:</strong> Lasna is not a recruiter. We only share
+            job information for public awareness. Always verify with the
+            official source before taking any action.
           </span>
           <button
             onClick={() => setShowDisclaimer(false)}

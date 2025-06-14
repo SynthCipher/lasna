@@ -5,6 +5,7 @@ const ScrollingLogosSection = () => {
   const logoData = [
     { src: assets.acreoficelogo, alt: "acreoficelogo" },
     { src: assets.dpklogo, alt: "dpklogo" },
+    { src: assets.drukautologo, alt: "druk atuto" },
     { src: assets.uollogo, alt: "uollogo" },
     { src: assets.gov_logo, alt: "gov" },
     { src: assets.helpagelogo, alt: "helpagelogo" },

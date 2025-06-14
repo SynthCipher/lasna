@@ -8,6 +8,7 @@ import {
   loginCompany,
   postJob,
   registerCompany,
+  updateCompanyProfile,
 } from "../controller/companyController.js";
 import upload from "../config/multer.js";
 import { protectCompany } from "../middlewares/authMiddleware.js";
@@ -37,5 +38,9 @@ router.post("/change-status", protectCompany, changeJobApplicationStatus);
 
 // Change the visibility of a job posting
 router.post("/change-visibility", protectCompany, changeVisibility);
+
+// Update company profile
+router.put("/update-profile", protectCompany, upload.single("image"), updateCompanyProfile);
+
 
 export default router;

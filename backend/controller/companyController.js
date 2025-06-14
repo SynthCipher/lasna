@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
 import JobApplication from "../models/jobApplication.js";
+import fs from "fs";
 
 // Register a new company
 const registerCompany = async (req, res) => {
@@ -113,28 +114,36 @@ const getCompanyData = async (req, res) => {
 // Post a new job
 // Post a new job
 const postJob = async (req, res) => {
-  const { 
-    title, 
-    description, 
+  const {
+    title,
+    description,
     district,
-    location, 
-    salary, 
+    location,
+    salary,
     category,
     deadlineDate,
     jobType,
     experienceRequired,
     skills,
-    contactEmail
+    contactEmail,
   } = req.body;
-  
+
   const companyId = req.company._id;
-  
+
   try {
     // Validate required fields
-    if (!title || !description || !district || !location || !category || !deadlineDate || !experienceRequired) {
+    if (
+      !title ||
+      !description ||
+      !district ||
+      !location ||
+      !category ||
+      !deadlineDate ||
+      !experienceRequired
+    ) {
       return res.json({
         success: false,
-        message: "All required fields must be provided"
+        message: "All required fields must be provided",
       });
     }
 
@@ -143,7 +152,7 @@ const postJob = async (req, res) => {
     if (deadline <= new Date()) {
       return res.json({
         success: false,
-        message: "Deadline date must be in the future"
+        message: "Deadline date must be in the future",
       });
     }
 
@@ -152,12 +161,12 @@ const postJob = async (req, res) => {
       description,
       district,
       location,
-      salary :salary || null,
+      salary: salary || null,
       companyId,
       category,
       deadlineDate: deadline,
       jobType: jobType || "full-time",
-      experienceRequired :  experienceRequired || null,
+      experienceRequired: experienceRequired || null,
       skills: skills || [],
       contactEmail,
       date: new Date(), // Current date when job is posted
@@ -166,7 +175,7 @@ const postJob = async (req, res) => {
     });
 
     await newJob.save();
-    
+
     res.json({
       success: true,
       message: "Job posted successfully",
@@ -314,6 +323,144 @@ const changeVisibility = async (req, res) => {
   }
 };
 
+// Update company profile
+const updateCompanyProfile = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+    const { name, email } = req.body;
+    const imageFile = req.file;
+
+    // Find the company
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.json({
+        success: false,
+        message: "Company not found",
+      });
+    }
+
+    // Validate input
+    if (!name || !email) {
+      // Clean up uploaded file if validation fails
+      if (imageFile && imageFile.path) {
+        try {
+          fs.unlinkSync(imageFile.path);
+        } catch (unlinkError) {
+          console.error("Error deleting temporary file:", unlinkError);
+        }
+      }
+      return res.json({
+        success: false,
+        message: "Name and email are required",
+      });
+    }
+
+    // Check if email is already taken by another company
+    if (email !== company.email) {
+      const existingCompany = await Company.findOne({
+        email,
+        _id: { $ne: companyId },
+      });
+      if (existingCompany) {
+        // Clean up uploaded file if validation fails
+        if (imageFile && imageFile.path) {
+          try {
+            fs.unlinkSync(imageFile.path);
+          } catch (unlinkError) {
+            console.error("Error deleting temporary file:", unlinkError);
+          }
+        }
+        return res.json({
+          success: false,
+          message: "Email already exists",
+        });
+      }
+    }
+
+    // Prepare update data
+    const updateData = {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+    };
+
+    // Handle image upload if provided
+    if (imageFile) {
+      try {
+        // Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(imageFile.path, {
+          folder: "LASNA",
+          use_filename: true,
+          unique_filename: true,
+        });
+
+        updateData.image = result.secure_url;
+
+        // Delete the temporary file
+        fs.unlinkSync(imageFile.path);
+
+        // Optionally delete the old image from Cloudinary
+        if (company.image) {
+          try {
+            // Extract public_id from the old image URL
+            const urlParts = company.image.split("/");
+            const publicIdWithExtension = urlParts[urlParts.length - 1];
+            const publicId = `LASNA/${publicIdWithExtension.split(".")[0]}`;
+            await cloudinary.uploader.destroy(publicId);
+          } catch (deleteError) {
+            console.error(
+              "Error deleting old image from Cloudinary:",
+              deleteError
+            );
+          }
+        }
+      } catch (uploadError) {
+        console.error("Error uploading image:", uploadError);
+        // Delete the temporary file if upload fails
+        if (imageFile && imageFile.path) {
+          try {
+            fs.unlinkSync(imageFile.path);
+          } catch (unlinkError) {
+            console.error("Error deleting temporary file:", unlinkError);
+          }
+        }
+        return res.json({
+          success: false,
+          message: "Error uploading image",
+        });
+      }
+    }
+
+    // Update the company
+    const updatedCompany = await Company.findByIdAndUpdate(
+      companyId,
+      updateData,
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      company: updatedCompany,
+    });
+  } catch (error) {
+    console.error("Error updating company profile:", error);
+
+    // Delete temporary file if it exists
+    if (req.file && req.file.path) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (unlinkError) {
+        console.error("Error deleting temporary file:", unlinkError);
+      }
+    }
+
+    res.json({
+      success: false,
+      message: `Error in updateCompanyProfile controller: ${error.message}`,
+    });
+  }
+};
+
 export {
   registerCompany,
   loginCompany,
@@ -323,4 +470,5 @@ export {
   getCompanyPostedJobs,
   changeJobApplicationStatus,
   changeVisibility,
+  updateCompanyProfile,
 };

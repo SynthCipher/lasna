@@ -64,6 +64,15 @@ const RecruiterLogin = () => {
       }
     }
   };
+  // Handle click outside the form
+  const handleBackdropClick = (e) => {
+    console.log(e.target)
+    console.log(e.currentTarget)
+    // Only close if clicking directly on the backdrop, not on the form
+    if (e.target === e.currentTarget) {
+      setShowRecruiterLogin(false);
+    }
+  };
 
   // useEffect(() => {
   //   console.log(name, email, password);
@@ -78,7 +87,10 @@ const RecruiterLogin = () => {
   }, []);
 
   return (
-    <div className="absolute z-10  top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center">
+    <div
+      onClick={handleBackdropClick}
+      className="absolute z-10 max-h-screen  top-0 left-0 right-0 bottom-0 backdrop-blur-sm bg-black/30 flex justify-center items-center"
+    >
       <form
         onSubmit={onSubmitHandler}
         className="relative bg-white p-10 rounded-xl text-slate-500"

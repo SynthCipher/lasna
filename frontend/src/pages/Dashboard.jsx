@@ -249,7 +249,7 @@ const Dashboard = () => {
             isMobile && !isSidebarCollapsed ? "ml-0" : ""
           }`}
         >
-          <div className="p-6 max-sm:p-3 bg-white m-4 mb-0 max-sm:m-2 rounded-xl shadow-sm border border-gray-100">
+          <div className="p-6 max-sm:pl-5  max-sm:pt-6  max-sm:p-3 bg-white m-4 mb-0 max-sm:m-2 rounded-xl shadow-sm border border-gray-100">
             {/* Show dashboard overview when on main dashboard route, otherwise show Outlet */}
             {isMainDashboard ? <DashboardOverview /> : <Outlet />}
           </div>

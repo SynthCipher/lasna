@@ -140,6 +140,7 @@ export const AppContextProvider = (props) => {
     setUserData,
     fectchUserData,
     fetchUserApplications,
+    fetchCompanyData,
   };
 
   return (

@@ -37,7 +37,7 @@ const NotFound = () => {
           ></div>
         </div>
 
-        <div className="text-center max-w-2xl mx-auto relative z-10 py-6">
+        <div className="text-center max-w-2xl mx-auto relative  py-6">
           {/* Animated 404 with mountain peaks */}
           <div className="relative mb-6">
             <div className="text-6xl md:text-8xl font-black text-transparent bg-gradient-to-r from-red-500 via-orange-500 to-red-600 bg-clip-text animate-pulse">
