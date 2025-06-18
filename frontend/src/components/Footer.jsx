@@ -21,7 +21,8 @@ const Footer = () => {
         <span className="sm:inline-block border-l h-4 border-gray-400"></span>
         <a
           className="text-gray-800 hover:underline"
-          href="https://jigmatdorjey.vercel.app"
+          // href="https://jigmatdorjey.vercel.app"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
         >
