@@ -23,10 +23,12 @@ const App = () => {
   const location = useLocation();
 
   const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [showBetaButton, setShowBetaButton] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+
   // Disable console.log in this file
   console.log = () => {};
 
@@ -71,6 +73,33 @@ const App = () => {
           >
             ✖
           </button>
+        </div>
+      )}
+
+      {/* Simple Beta Button - Fixed above disclaimer */}
+      {showBetaButton && (
+        <div className={`fixed right-4 z-50 transition-all duration-300 ${
+          showDisclaimer ? 'bottom-16' : 'bottom-4'
+        }`}>
+          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center">
+            {/* Content */}
+            <div className="flex items-center px-4 py-2">
+              {/* Beta indicator */}
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-yellow-300 rounded-full animate-pulse"></div>
+                <span className="text-sm font-bold tracking-wider">BETA</span>
+              </div>
+              
+              {/* Close button */}
+              {/* <button
+                onClick={() => setShowBetaButton(false)}
+                className="ml-3 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-xs transition-colors duration-200"
+                title="Close"
+              >
+                ×
+              </button> */}
+            </div>
+          </div>
         </div>
       )}
 
