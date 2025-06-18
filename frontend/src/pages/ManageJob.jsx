@@ -8,6 +8,7 @@ import { AppContext } from "../context/AppContext";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { Eye } from "lucide-react";
 
 const ManageJob = () => {
   const navigate = useNavigate();
@@ -102,22 +103,40 @@ const ManageJob = () => {
                         {moment(job.date).format("ll")}
                       </span>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-1">
+                    <h3
+                      onClick={() =>
+                        navigate(`/dashboard/manage-job/${job._id}`)
+                      }
+                      className="font-semibold cursor-pointer text-gray-900 mb-1"
+                    >
                       {job.title}
                     </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-600 ">
-                      <span className="flex items-center gap-1">
-                        <img
-                          src={assets.location_icon}
-                          className="h-3  w-3"
-                          alt=""
-                        />
+                    <div
+                      onClick={() =>
+                        navigate(`/dashboard/manage-job/${job._id}`)
+                      }
+                      className="flex cursor-pointer items-center gap-4 text-sm text-gray-600 "
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600">
+                            Applicants:
+                          </span>
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                            {job.applicants}
+                          </span>
+                        </div>
 
-                        {job.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        Applicants : {job.applicants}
-                      </span>
+                        <button
+                          onClick={() =>
+                            navigate(`/dashboard/manage-job/${job._id}`)
+                          }
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          View Details
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-2">
@@ -175,7 +194,12 @@ const ManageJob = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div
+                      onClick={() =>
+                        navigate(`/dashboard/manage-job/${job._id}`)
+                      }
+                      className="text-sm font-medium cursor-pointer text-gray-900"
+                    >
                       {job.title}
                     </div>
                   </td>
@@ -198,10 +222,19 @@ const ManageJob = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
+                    <div
+                      onClick={() =>
+                        navigate(`/dashboard/manage-job/${job._id}`)
+                      }
+                      className="flex cursor-pointer items-center"
+                    >
                       <span className="text-sm font-medium text-gray-900">
                         {job.applicants}
                       </span>
+                      <div className="flex items-center  text-xs md:text-sm  ml-2  cursor-pointer transition-colors duration-200">
+                        <Eye className="w-4 h-4 mr-0.5" />
+                        View
+                      </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">

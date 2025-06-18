@@ -461,6 +461,58 @@ const updateCompanyProfile = async (req, res) => {
   }
 };
 
+// Controller function to get job applicants by job ID
+const getJobApplicantsByJobId = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const companyId = req.company.id; // From protectCompany middleware
+
+    // First verify that the job belongs to the authenticated company
+    const job = await Job.findOne({ _id: jobId, companyId });
+    if (!job) {
+      return res.json({
+        success: false,
+        message: "Job not found or unauthorized access",
+      });
+    }
+
+    // Find all applications for the specific job and populate user details
+    const applications = await JobApplication.find({ jobId })
+      .populate("userId", "name email resume image") // Based on your User schema
+      .populate(
+        "jobId",
+        "title location district salary category experienceRequired jobType"
+      )
+      .sort({ createdAt: -1 }); // Sort by newest first
+
+    // Filter out any applications where user doesn't exist (in case of deleted users)
+    const validApplications = applications.filter((app) => app.userId);
+
+    res.json({
+      success: true,
+      message: "Job applicants fetched successfully",
+      applications: validApplications,
+      jobDetails: {
+        title: job.title,
+        location: job.location,
+        district: job.district,
+        category: job.category,
+        salary: job.salary,
+        experienceRequired: job.experienceRequired,
+        jobType: job.jobType,
+        totalApplications: validApplications.length,
+        deadlineDate: job.deadlineDate,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Error fetching job applicants",
+    });
+  }
+};
+
 export {
   registerCompany,
   loginCompany,
@@ -471,4 +523,5 @@ export {
   changeJobApplicationStatus,
   changeVisibility,
   updateCompanyProfile,
+  getJobApplicantsByJobId,
 };

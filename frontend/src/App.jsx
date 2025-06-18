@@ -16,6 +16,7 @@ import { Analytics } from "@vercel/analytics/react";
 import CompanyProfile from "./pages/CompanyProfile";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy ";
+import JobApplicants from "./pages/JobApplicants";
 
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="add-job" element={<AddJob />} />
             <Route path="manage-job" element={<ManageJob />} />
+            <Route path="manage-job/:id" element={<JobApplicants />} />
             <Route path="view-applications" element={<ViewApplication />} />
             <Route path="company-profile" element={<CompanyProfile />} />
           </Route>

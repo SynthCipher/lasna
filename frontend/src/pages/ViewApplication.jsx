@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { assets, viewApplicationsPageData } from "../assets/assets";
+import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -186,7 +186,7 @@ const ViewApplication = () => {
                     <a
                       href={applicant?.userId?.resume}
                       target="_blank"
-                      className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-lg mb-3 transition-colors duration-200 flex items-center justify-center"
+                      className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-1 px-2 rounded-lg mb-3 transition-colors duration-200 flex items-center justify-center"
                     >
                       <span className="mr-2">📄</span>
                       View Resume
@@ -202,7 +202,7 @@ const ViewApplication = () => {
                             e.target.value
                           )
                         }
-                        className="w-full bg-white border border-slate-300 text-slate-800 py-3 px-4 rounded-xl transition-all duration-200 shadow-sm focus:ring-2  focus:ring-blue-500 focus:outline-none font-medium appearance-none cursor-pointer"
+                        className="w-full bg-white border border-slate-300 text-slate-800 py-1 px-2 rounded-xl transition-all duration-200 shadow-sm focus:ring-2  focus:ring-blue-500 focus:outline-none font-medium text-sm appearance-none cursor-pointer"
                       >
                         <option value="Pending">📋 Pending Review</option>
                         <option value="Accepted">✅ Accept</option>
@@ -308,7 +308,7 @@ const ViewApplication = () => {
                                   e.target.value
                                 )
                               }
-                              className="w-full bg-white border border-slate-300 text-slate-800 py-2 px-3 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200 font-medium appearance-none cursor-pointer"
+                              className="w-full bg-white border border-slate-300 text-slate-800 py-1 px-2 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-200 font-medium text-sm appearance-none cursor-pointer"
                             >
                               <option
                                 value="pending"

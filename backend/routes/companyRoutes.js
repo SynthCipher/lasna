@@ -5,6 +5,7 @@ import {
   getCompanyData,
   getCompanyJobApplicants,
   getCompanyPostedJobs,
+  getJobApplicantsByJobId,
   loginCompany,
   postJob,
   registerCompany,
@@ -42,5 +43,7 @@ router.post("/change-visibility", protectCompany, changeVisibility);
 // Update company profile
 router.put("/update-profile", protectCompany, upload.single("image"), updateCompanyProfile);
 
+// Get applicants for a specific job by job ID
+router.get("/job-applicants/:jobId", protectCompany, getJobApplicantsByJobId);
 
 export default router;
