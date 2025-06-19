@@ -23,7 +23,6 @@ const AddJob = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [jobLink, setJobLink] = useState("");
- 
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
@@ -550,6 +549,9 @@ const AddJob = () => {
                 </option>
                 <option value="internship" className="text-gray-700">
                   Internship
+                </option>
+                <option value="internship" className="text-gray-700">
+                  Volunter
                 </option>
                 <option value="freelance" className="text-gray-700">
                   Freelance
